@@ -37,6 +37,17 @@ router.get('/:id/tasks', (req, res) => {
 });
 
 
+router.get('/:id/resources', (req, res) => {
+  Projects.findResources(req.params.id)
+  .then(resources => {
+    res.json(resources);
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get resources' });
+  });
+});
+
+
 router.post('/', (req, res) => {
     Projects.add(req.body)
     .then(response => {

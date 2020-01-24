@@ -18,10 +18,7 @@ function find(id) {
 
 function add(task) {
     return db('tasks')
-        .insert(task)
-        .then(ids => {
-            return find(ids[0])
-        });
+        .insert(task, "id");
 }
 
 

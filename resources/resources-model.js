@@ -1,6 +1,7 @@
 const db = require('../db-config.js');
 module.exports = {
-    find
+    find,
+    add
 };
 
 function find() {
@@ -8,4 +9,7 @@ function find() {
 }
 
 
-
+function add(resource) {
+    return db('resources')
+    .insert(resource, "id")
+}

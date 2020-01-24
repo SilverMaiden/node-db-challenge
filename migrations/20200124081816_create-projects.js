@@ -20,7 +20,6 @@ exports.up = function(knex, Promise) {
     })
 
 
-    // we can chain together createTable
     .createTable('tasks', tbl => {
       tbl.increments();
       tbl.string('description', 128)
@@ -30,11 +29,9 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .defaultTo(false);
       tbl.integer('project_id')
-        // forces integer to be positive
         .unsigned()
         .notNullable()
-        .references('project_id')
-        // this table must exist already
+        .references('id')
         .inTable('projects')
     })
     .createTable('project-resources', tbl => {
@@ -42,23 +39,18 @@ exports.up = function(knex, Promise) {
         .unsigned()
         .notNullable()
         .references('id')
-        // this table must exist already
         .inTable('projects')
       tbl.integer('resource_id')
         .unsigned()
         .notNullable()
         .references('id')
-        // this table must exist already
         .inTable('resources')
 
-      // the combination of the two keys becomes our primary key
-      // will enforce unique combinations of ids
       tbl.primary(['project_id', 'resource_id']);
     });
 }
 
 exports.down = function(knex) {
-  // drop in the opposite order
   return knex.schema
     .dropTableIfExists('project-resources')
     .dropTableIfExists('tasks')
