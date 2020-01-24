@@ -33,7 +33,7 @@ exports.up = function(knex, Promise) {
         // forces integer to be positive
         .unsigned()
         .notNullable()
-        .references('id')
+        .references('project_id')
         // this table must exist already
         .inTable('projects')
     })
